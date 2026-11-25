@@ -1,0 +1,113 @@
+======================================================================
+SYNTHETIC COMPLAINT DATASET - VALIDATION REPORT
+======================================================================
+
+-- 1-6. Counts
+[PASS] 1. Total complaint records = 10,000 - 10000
+[PASS] 2. Total complaint pairs = 10,000 - 10000
+[PASS] 3. Duplicate pairs (label 1) = 5,000 - 5000
+[PASS] 4. Non-duplicate pairs (label 0) = 5,000 - 5000
+[PASS] 5. Unique complaint IDs = 10,000 - 10000
+[INFO] 6. Unique categories: 20 | unique subcategories: 49
+
+-- Schema
+[PASS] Required complaint columns present
+[PASS] Required pair columns present
+[PASS] All complaints marked data_origin = synthetic
+[PASS] All pairs marked data_origin = synthetic
+[PASS] Labels are only 0 or 1
+[PASS] Status values valid
+
+-- 7-12. Integrity
+[PASS] 7. Missing values in complaints - 0
+[PASS] 7. Missing values in pairs - 0
+[PASS] 8. Duplicate complaint IDs - 0
+[PASS] 9. Duplicate pair IDs - 0
+[PASS] 10. Invalid complaint ID references - 0
+[PASS] 11. Self-pairs - 0
+[PASS] 12. Reversed / repeated pairs - 0
+[PASS] Pair texts match complaints.csv
+[PASS] No identical complaint texts - 0
+
+-- Label correctness (via hidden issue_id)
+[PASS] Every label-1 pair shares the same underlying issue
+[PASS] Every label-0 pair comes from different issues
+[PASS] Every label-1 pair is from the same locality
+[PASS] Every label-1 pair has the same subcategory
+[INFO] Duplicate pairs filed under different (related) categories: 272
+
+-- Leakage between train / val / test
+[PASS] Each issue (paraphrase family) is in exactly one split
+[PASS] Each locality is in exactly one split
+[PASS] Both complaints of every pair are in the pair's split
+[PASS] train: split files match raw files
+[PASS] val: split files match raw files
+[PASS] test: split files match raw files
+
+Split sizes:
+duplicate_label     0     1  complaints  localities
+split                                              
+train            3500  3500        6924          70
+val               750   750        1499          15
+test              750   750        1577          15
+
+-- 13. Category distribution (complaints)
+                              count  pct
+category                                
+Water Supply                    837  8.4
+Drainage Problems               698  7.0
+Other Municipal Issues          689  6.9
+Public Park Maintenance         629  6.3
+Streetlight Problems            618  6.2
+Traffic and Road Obstruction    611  6.1
+Garbage Collection              603  6.0
+Public Toilets                  584  5.8
+Road Damage                     471  4.7
+Public Health and Sanitation    430  4.3
+Dead Animal Removal             421  4.2
+Stray Animal Problems           415  4.2
+Illegal Encroachment            409  4.1
+Mosquito Control                391  3.9
+Footpath Damage                 383  3.8
+Water Leakage                   369  3.7
+Stormwater Drainage             367  3.7
+Potholes                        365  3.6
+Sewage Overflow                 365  3.6
+Construction Waste              345  3.4
+
+Writing style distribution:
+writing_style
+basic             1561
+hinglish          1288
+formal            1152
+brief             1127
+short             1072
+mixed              892
+angry              848
+subject            758
+hinglish_short     665
+long               637
+
+-- 14. Complaint text length statistics
+Words : min=3  mean=30.4  median=29  max=76
+Chars : min=18  mean=170.4  median=163  max=425
+complaint_text
+long (>25)           6594
+medium (9-25)        2412
+short (<=8 words)     994
+
+-- Pair difficulty: word-overlap (Jaccard) by pair type
+                                      count   mean    25%    50%    75%
+pair_type                                                              
+duplicate_same_issue                 5000.0  0.151  0.078  0.136  0.208
+easy_random                          1251.0  0.069  0.000  0.058  0.111
+hard_same_locality_diff_category     1000.0  0.106  0.045  0.094  0.152
+hard_same_locality_same_category     1249.0  0.121  0.049  0.102  0.175
+hard_same_subcategory_diff_locality  1000.0  0.117  0.027  0.085  0.182
+medium_same_category_diff_locality    500.0  0.083  0.016  0.069  0.136
+[INFO] Duplicates with low word overlap (<0.20): 71.7%
+[INFO] Non-duplicates with high word overlap (>0.30): 2.9%
+
+======================================================================
+RESULT: ALL CHECKS PASSED
+======================================================================
